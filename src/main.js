@@ -198,7 +198,7 @@ class MainScene extends Phaser.Scene {
         })
 
         // mobile toggle button (always visible on top-left)
-        this.mobileToggleBtn = this.add.text(config.width-20, 20, "📱 Mobile: OFF", { fontSize: "18px", fill: "#fff", backgroundColor: "rgba(0,0,0,0.4)", padding: { x: 10, y: 6 } })
+        this.mobileToggleBtn = this.add.text(this.scale.width-60, 20, "📱 Mobile: OFF", { fontSize: "18px", fill: "#fff", backgroundColor: "rgba(0,0,0,0.4)", padding: { x: 10, y: 6 } })
             .setScrollFactor(0).setInteractive();
         this.mobileToggleBtn.on("pointerdown", () => {
             this.mobileMode = !this.mobileMode;
@@ -244,9 +244,39 @@ class MainScene extends Phaser.Scene {
             }
         }, this);
 
+        // ----- RESPONSIVE MOBILE UI -----
+        this.scale.on("resize", this.handleResize, this);
+
+        // run once at startup
+        this.handleResize({ width: this.scale.width, height: this.scale.height });
+
+
         // debug: log loaded textures (optional)
         // console.log("Loaded textures:", Object.keys(this.textures.list));
     } // end create()
+
+    handleResize(gameSize) {
+        if (!gameSize) return;
+        const width = gameSize.width;
+        const height = gameSize.height;
+
+        // --- Joystick bottom-left ---
+        const joyX = width * 0.18;
+        const joyY = height * 0.78;
+
+        this.joystickBase.setPosition(joyX, joyY);
+        this.joystickThumb.setPosition(joyX, joyY);
+
+        // --- Run button bottom-right ---
+        this.runBtn.setPosition(width * 0.82, height * 0.78);
+
+        // --- Hide/Interact above run button ---
+        this.interactBtn.setPosition(width * 0.82, height * 0.60);
+
+        // --- Mobile toggle top-right ---
+        this.mobileToggleBtn.setPosition(width - 200, 40);
+    }
+
 
     // ---------------- CARROT HELPERS ----------------
     spawnInitialCarrots() {
