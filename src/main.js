@@ -224,19 +224,19 @@ class MainScene extends Phaser.Scene {
 
         // ---------------- MOBILE UI variables ----------------
         this.mobileMode = false;
-        this.joystickBase = this.add.circle(120, 420, 60, 0x000000, 0.25).setScrollFactor(0).setVisible(false);
-        this.joystickThumb = this.add.circle(120, 420, 30, 0xffffff, 0.6).setScrollFactor(0).setVisible(false);
+        this.joystickBase = this.add.circle(120, 420, 100, 0x000000, 0.25).setScrollFactor(0).setVisible(false);
+        this.joystickThumb = this.add.circle(120, 420, 75, 0xffffff, 0.6).setScrollFactor(0).setVisible(false);
         this.joystickPointerId = null;
         this.joystickForce = { x: 0, y: 0 };
 
-        this.interactBtn = this.add.text(config.width-20, 400, "Hide", { fontSize: "36px", fill: "#000", backgroundColor: "#fff", padding: { x: 18, y: 12 } })
+        this.interactBtn = this.add.text(config.width-20, 400, "Hide", { fontSize: "36px", fill: "#000", backgroundColor: "#fff", padding: { x: 30, y: 20 } })
             .setScrollFactor(0).setVisible(false).setInteractive();
         this.interactBtn.on("pointerdown", () => {
             if (this.canHide && !this.isHiding) this.enterHide();
             else if (this.isHiding) this.exitHide();
             this.interactBtn.setText(this.isHiding ? "Hiding" : "Hide")
         });
-        this.runBtn = this.add.text(config.width-20, 500, "Run", { fontSize: "36px", fill: "#000", backgroundColor: "#fff", padding: { x:18, y:12 } })
+        this.runBtn = this.add.text(config.width-20, 500, "Run", { fontSize: "36px", fill: "#000", backgroundColor: "#fff", padding: { x:30, y:20 } })
             .setScrollFactor(0).setVisible(false).setInteractive();
         this.runBtn.on("pointerdown", () => {
             this.isRunning = !this.isRunning
@@ -244,7 +244,7 @@ class MainScene extends Phaser.Scene {
         })
 
         // mobile toggle button (always visible on top-left)
-        this.mobileToggleBtn = this.add.text(this.scale.width-60, 20, "📱 Mobile: OFF", { fontSize: "18px", fill: "#fff", backgroundColor: "rgba(0,0,0,0.4)", padding: { x: 10, y: 6 } })
+        this.mobileToggleBtn = this.add.text(this.scale.width-60, 20, "📱 Mobile: OFF", { fontSize: "18px", fill: "#fff", backgroundColor: "rgba(0,0,0,0.4)", padding: { x: 30, y: 18 } })
             .setScrollFactor(0).setInteractive();
         this.mobileToggleBtn.on("pointerdown", () => {
             this.mobileMode = !this.mobileMode;
