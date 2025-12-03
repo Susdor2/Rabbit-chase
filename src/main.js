@@ -114,7 +114,7 @@ class MainScene extends Phaser.Scene {
             }
 
             let fox = this.foxGroup.create(fx, fy, "fox");
-            fox.setScale(1);
+            fox.setScale(2);
             fox.setCollideWorldBounds(true);
             fox.isChasing = false;
             fox.randomX = Phaser.Math.Between(-200, 200);
@@ -193,12 +193,17 @@ class MainScene extends Phaser.Scene {
 
         // ---- FOX TOUCHES RABBIT = GAME OVER ----
         this.physics.add.overlap(
-            this.rabbit,
-            this.foxGroup,
-            (rabbit, fox) => this.triggerGameOver(),
+        this.rabbit,
+        this.foxGroup,
+        (rabbit, fox) => {
+            if (!this.isHiding) {
+                this.triggerGameOver();
+            }
+        },
             null,
             this
         );
+
 
 
         // ---------------- SCORE ----------------
@@ -517,7 +522,11 @@ triggerGameOver() {
                 if (this.canHide && Phaser.Input.Keyboard.JustDown(this.keyE)) this.enterHide();
             } else {
                 // mobile joystick controls
-                this.rabbit.setVelocity(this.joystickForce.x * speed, this.joystickForce.y * speed);
+                this.rabbit.setVelocity(this.joystickForce.x * speed, this.joystickForce.y * speed)
+                if (this.joystickForce.x !=0 || this.joystickForce.y !=0) this.rabbit.play("rabbit-run", true)
+                else this.rabbit.play("rabbit-idle")
+                if (this.joystickForce.x<0) this.rabbit.setFlipX(true)
+                else if (this.joystickForce.x>0) this.rabbit.setFlipX(false)
             }
 
             // check bush overlap (distance-based)
